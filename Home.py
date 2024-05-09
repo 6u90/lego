@@ -11,7 +11,7 @@ with open('./config.yaml') as file:
 
 st.set_page_config(page_title="LEGO - Presenze", page_icon="🏗️")
 
-# Inizializza l'autenticatore
+
 authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
@@ -20,10 +20,9 @@ authenticator = stauth.Authenticate(
     config['pre-authorized']
 )
 
-# Funzione per la registrazione della presenza
 def registra_presenza():
     st.header('Registra Presenza')
-    nome = st.text_input('Il tuo nome', value=st.session_state.get("name", ""), disabled=True)
+    nome = st.text_input('Il tuo nome', value=st.session_state["name"], disabled=True)
     movimento = st.radio('Seleziona il movimento', ['Entrata', 'Uscita'])
 
     # Controllo che tutti i campi siano stati compilati
@@ -36,30 +35,32 @@ def registra_presenza():
     else:
         st.warning("Inserisci tutti i campi prima di registrare la presenza.")
 
-# Pagina principale
-def main():
-    st.title("LEGO - Registra Presenza")
-    st.image("logo.jpeg", width=300)
-    
-    # Effettua il login
+st.title("LEGO - Registra Presenza")
+st.image("logo.jpeg", width=300)
+
+authenticator.login()
+if st.session_state["authentication_status"]:
+    registra_presenza()
+    st.sidebar.button("Logout", key="logout_button")
+    st.sidebar.success(f'Welcome *{st.session_state["name"]}*')
+    authenticator.logout("Logout", "main")
     authenticator.login()
+    
+    # authenticator.logout()
 
-    # Se l'utente è autenticato, mostra la funzione di registrazione presenza
-    if st.session_state["authentication_status"]:
-        registra_presenza()
-        st.sidebar.success(f'Welcome *{st.session_state.get("name", "")}*')
 
-        # Imposta il cookie per il login persistente
-        authenticator.set_cookie()
+elif st.session_state["authentication_status"] is False:
+    st.error('Username/password is incorrect')
+elif st.session_state["authentication_status"] is None:
+    st.warning('Please enter your username and password')
 
-    # Se l'utente non è autenticato, mostra messaggio di errore o richiesta di login
-    elif st.session_state["authentication_status"] is False:
-        st.error('Username/password is incorrect')
-    elif st.session_state["authentication_status"] is None:
-        st.warning('Please enter your username and password')
+# st.set_page_config(
+#     page_title="Multipage app",
+#     page_icon="🏗️"
+# )
 
-    st.sidebar.image("logo.jpeg", use_column_width=True)
+st.sidebar.image("logo.jpeg", use_column_width=True)
 
-# Esegui la funzione principale
-if __name__ == "__main__":
-    main()
+
+# if st.sidebar.button("Logout", key="logout_button"):
+#     authenticator.logout("Logout", "main")
