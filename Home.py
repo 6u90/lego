@@ -9,7 +9,7 @@ from yaml.loader import SafeLoader
 with open('./config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
-st.set_page_config(page_title="Il tuo titolo", page_icon="🏗️")
+st.set_page_config(page_title="LEGO - Presenze", page_icon="🏗️")
 
 
 authenticator = stauth.Authenticate(
@@ -34,8 +34,8 @@ def registra_presenza():
             st.success(f'Presenza registrata per {nome} - {timestamp}')
     else:
         st.warning("Inserisci tutti i campi prima di registrare la presenza.")
-
-st.title("LEGO - Registra Presenza")
+st.image("logo.jpeg")
+st.title("Registra Presenza")
 
 authenticator.login()
 if st.session_state["authentication_status"]:
