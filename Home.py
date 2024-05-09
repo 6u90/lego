@@ -40,7 +40,6 @@ st.image("logo.jpeg", width=300)
 
 authenticator.login()
 if st.session_state["authentication_status"]:
-    st.image("logo.jpeg", width=300)
     registra_presenza()
     st.sidebar.button("Logout", key="logout_button")
     st.sidebar.success(f'Welcome *{st.session_state["name"]}*')
