@@ -2,5 +2,5 @@ streamlit
 streamlit_authenticator
 datetime
 pandas
-matplotlib.pyplot
+matplotlib
 seaborn 
