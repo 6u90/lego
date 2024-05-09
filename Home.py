@@ -2,6 +2,7 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from datetime import datetime
 import pandas as pd
+import extra_streamlit_components as stx
 
 import yaml
 from yaml.loader import SafeLoader
