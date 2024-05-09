@@ -34,11 +34,13 @@ def registra_presenza():
             st.success(f'Presenza registrata per {nome} - {timestamp}')
     else:
         st.warning("Inserisci tutti i campi prima di registrare la presenza.")
-st.image("logo.jpeg")
-st.title("Registra Presenza")
+
+st.title("LEGO - Registra Presenza")
+st.image("logo.jpeg", width=300)
 
 authenticator.login()
 if st.session_state["authentication_status"]:
+    st.image("logo.jpeg", width=300)
     registra_presenza()
     st.sidebar.button("Logout", key="logout_button")
     st.sidebar.success(f'Welcome *{st.session_state["name"]}*')
